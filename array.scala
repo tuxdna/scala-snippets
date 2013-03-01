@@ -24,3 +24,10 @@ val indexes = for(i <- 0 until b.length if b(i) < 0) yield i
 for( j <- (1 until indexes.length).reverse ) b.remove(indexes(j))
 println(b)
 b.mkString("[", ",", "]")
+
+
+val matrix = Array.ofDim[Double](3,4)
+
+val triangle = new Array[Array[Int]](10)
+for (i <- 0 until triangle.length)
+triangle(i) = new Array[Int](i + 1)
