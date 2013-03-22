@@ -6,7 +6,7 @@ object Generics {
   }
 
   class Reference[T] {
-    private var contents: T = _
+    private var contents: T = _  // represents a default value for T
     def set(value: T) { contents = value }
     def get: T = contents
   }
