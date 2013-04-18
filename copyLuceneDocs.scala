@@ -22,6 +22,7 @@ object copyLuceneDocs {
 
   def help() {
       println("copyLuceneDocs <IN-INDEX-PATH> <OUT-INDEX-PATH> [LIMIT]")
+      System.exit(0)
   }
 
   def main(args: Array[String]) = {
@@ -83,8 +84,9 @@ object copyLuceneDocs {
       }
 
       // verify
-      for(k <- 0 until docNew.getFields.size) {
-        val fld = fields.get(k)
+      val fieldsNew = docNew.getFields
+      for(k <- 0 until fieldsNew.size) {
+        val fld = fieldsNew.get(k)
         println("     +> Field: " + fld.name)
       }
 
