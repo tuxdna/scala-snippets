@@ -1,3 +1,7 @@
+/*
+ * Define Abstract types.
+ */
+
 object abstractTypes extends App {
   abstract class Buffer {
     type T; val element: T
