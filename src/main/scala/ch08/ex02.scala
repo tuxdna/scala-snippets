@@ -1,3 +1,5 @@
+package ch08
+
 /*
  * 2. Extend the BankAccount class of the preceding exercise into a
  * class SavingsAccount that earns interest every month (when a

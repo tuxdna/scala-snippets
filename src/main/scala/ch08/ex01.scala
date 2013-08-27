@@ -1,3 +1,5 @@
+package ch08
+
 /*
  * 1. Extend the following BankAccount class to a CheckingAccount
  * class that charges $1 for every deposit and withdrawal.

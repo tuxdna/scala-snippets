@@ -1,3 +1,5 @@
+package ch08
+
 /*
  * 4. Define an abstract class Item with methods price and description.
  * A SimpleItem is an item whose price and description are specified

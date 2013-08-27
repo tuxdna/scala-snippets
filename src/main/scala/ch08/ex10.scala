@@ -1,3 +1,5 @@
+package ch08
+
 /*
  * 10. The file scala/collection/immutable/Stack.scala contains the
  * definition class Stack[A] protected (protected val elems: List[A])

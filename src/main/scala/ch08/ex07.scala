@@ -1,3 +1,5 @@
+package ch08
+
 /*
  * 7. Provide a class Square that extends java.awt.Rectangle and has
  * three constructors:

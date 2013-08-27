@@ -1,3 +1,5 @@
+package ch08
+
 /*
  * 3. Consult your favorite Java or C++ textbook that is sure to have
  * an example of a toy inheritance hierarchy, perhaps involving

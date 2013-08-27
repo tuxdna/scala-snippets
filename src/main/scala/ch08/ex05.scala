@@ -1,3 +1,5 @@
+package ch08
+
 /*
  * 5. Design a class Point whose x and y coordinate values can be
  * provided in a constructor. Provide a subclass LabeledPoint whose

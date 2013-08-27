@@ -1,3 +1,5 @@
+package ch08
+
 /*
  * 8. Compile the Person and SecretAgent classes in Section 8.6,
  * “Overriding Fields,” on page 91 and analyze the class files with

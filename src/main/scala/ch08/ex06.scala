@@ -1,3 +1,5 @@
+package ch08
+
 /*
  * 6. Define an abstract class Shape with an abstract method
  * centerPoint and subclasses Rectangle and Circle. Provide
