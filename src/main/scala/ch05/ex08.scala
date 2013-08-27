@@ -1,3 +1,5 @@
+package ch05
+
 // 8. Make a class Car with read-only properties for manufacturer, model
 // name, and model year, and a read-write property for the license plate.
 // Supply four constructors. All require the manufacturer and model name.

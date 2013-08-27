@@ -1,3 +1,5 @@
+package ch05
+
 // 2. Write a class BankAccount with methods deposit and withdraw, and a read-only property balance.
 
 object ex02 extends App {

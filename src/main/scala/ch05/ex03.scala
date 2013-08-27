@@ -1,3 +1,5 @@
+package ch05
+
 //3. Write a class Time with read-only properties hours and minutes and a
 //   method before(other: Time): Boolean that checks whether this time
 //   comes before the other. A Time object should be constructed as
