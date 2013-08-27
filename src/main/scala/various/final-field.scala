@@ -1,3 +1,5 @@
+package various.finalfield
+
 class NotFixed {
   final def fixedMethod = "fixed"
 }

@@ -54,9 +54,18 @@ object test {
   val font = new java.awt.Font(attrs) // Expects a Java map
 
   val t = (1, 3.14, "Fred")
-  val second = t._2 // Sets second to 3.14
-  val (first, second, third) = t
-  val (first, second, _) = t
+
+  {
+    val second = t._2 // Sets second to 3.14  
+  }
+  
+  {
+    val (first, second, third) = t
+  }
+
+  {
+    val (first, second, _) = t
+  }
 
   "New York Yankees".partition(_.isUpper)
   val symbols = Array("<", "-", ">")
