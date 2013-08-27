@@ -12,5 +12,8 @@ final class Fixed {
   def doSomething = "Fixed did something!"
 }
 
-class Changeable1 extends Fixed
+// Illegal inheritance:
+// Uncomment the line below
+
+// class Changeable1 extends Fixed
 
