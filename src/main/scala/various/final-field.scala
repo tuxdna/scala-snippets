@@ -5,7 +5,11 @@ class NotFixed {
 }
 
 class Changeable2 extends NotFixed {
-  override def fixedMethod = "not fixed"
+
+  // Illegal override 
+  // Uncomment the line below
+  
+  // override def fixedMethod = "not fixed"
 }
 
 final class Fixed {
