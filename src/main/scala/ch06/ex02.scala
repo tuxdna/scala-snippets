@@ -1,3 +1,5 @@
+package ch06
+
 // 2. The preceding problem wasn’t very object-oriented. Provide a general
 // super- class UnitConversion and define objects InchesToCentimeters, 
 // GallonsToLiters, and MilesToKilometers that extend it.

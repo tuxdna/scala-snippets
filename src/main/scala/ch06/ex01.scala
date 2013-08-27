@@ -1,3 +1,5 @@
+package ch06
+
 //1. Write an object Conversions with methods inchesToCentimeters, 
 // gallonsToLiters, and milesToKilometers.
 

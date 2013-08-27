@@ -1,3 +1,5 @@
+package ch06
+
 // 6. Write an enumeration describing the four playing card suits so that
 // the toString method returns ♣, ♦, ♥, or ♠.
 

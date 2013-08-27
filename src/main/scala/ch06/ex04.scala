@@ -1,3 +1,5 @@
+package ch06
+
 // 4. Define a Point class with a companion object so that you can
 // construct Point instances as Point(3, 4), without using new.
 
