@@ -6,15 +6,25 @@ package ch07
  * 
  */
 
-import java.util.{HashMap => JavaHashMap}
-import scala.collection.mutable.{HashMap => ScalaHashMap}
+import java.util.{ HashMap => JavaHashMap }
+import scala.collection.mutable.{ HashMap => ScalaHashMap }
 
 object ex05 extends App {
   var javahm = new JavaHashMap[String, Int]()
 
-  for( i <-  List("A" -> 1, "B" -> 2) ) javahm += (i._1, i._2)
+  for (i <- List("A" -> 1, "B" -> 2)) {
+    // javahm += (i._1, i._2)
+    javahm.put(i._1, i._2)
+  }
 
   val scalahm = new ScalaHashMap[String, Int]()
 
-  for((k,v) <- javahm) scalahm += (k -> v)
+  val keys = javahm.keySet();
+  val keysIterable = keys.toArray(new Array[String](keys.size()))
+
+  for (k <- keysIterable) {
+    val v = javahm.get(k)
+    scalahm += (k -> v)
+  }
+
 }
