@@ -1,3 +1,5 @@
+package ch07
+
 /* 1. Write an example program to demonstrate that
 // 
 //    package com.horstmann.impatient

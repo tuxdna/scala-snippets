@@ -1,3 +1,5 @@
+package ch07
+
 /* 3. Write a package random with functions
  * 
  *   nextInt(): Int,

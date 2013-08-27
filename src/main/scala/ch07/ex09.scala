@@ -1,3 +1,5 @@
+package ch07
+
 /*
  * 9. Write a program that imports the java.lang.System class, reads
  * the user name from the user.name system property, reads a password

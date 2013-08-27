@@ -1,3 +1,5 @@
+package ch07
+
 /*
  * 6. Write a program that copies all elements from a Java hash map into
  * a Scala hash map. Use imports to rename both classes.
