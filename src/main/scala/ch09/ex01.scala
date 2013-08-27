@@ -1,3 +1,5 @@
+package ch09
+
 /*
 1. Write a Scala code snippet that reverses the lines in a file (making the last
 line the first one, and so on).
