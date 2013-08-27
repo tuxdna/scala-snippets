@@ -1,3 +1,5 @@
+package ch09
+
 
 object filerandom extends App {
   val r = new java.util.Random

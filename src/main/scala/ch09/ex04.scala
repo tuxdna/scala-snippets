@@ -1,3 +1,5 @@
+package ch09
+
 /*
  * 4. Write a Scala program that reads a text file containing only
  * floating-point numbers. Print the sum, average, maximum, and minimum

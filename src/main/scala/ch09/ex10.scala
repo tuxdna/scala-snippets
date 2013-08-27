@@ -1,3 +1,5 @@
+package ch09
+
 /*
  * 10. Expand the example with the serializable Person class that stores a
  * collection of friends. Construct a few Person objects, make some of
