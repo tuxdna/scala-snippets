@@ -1,8 +1,13 @@
+package various.namedargs
 
-def decorate(str: String, left: String = "[", right: String = "]") =
-  left + str + right
+object test {
 
-println(decorate("Hello"))
-println(decorate("Hello", "<<<", ">>>"))
-println(decorate("Hello", "<<<", right=">}>"))
-println(decorate(right="}", left="{", str = "Hello"))
+  def decorate(str: String, left: String = "[", right: String = "]") =
+    left + str + right
+
+  println(decorate("Hello"))
+  println(decorate("Hello", "<<<", ">>>"))
+  println(decorate("Hello", "<<<", right = ">}>"))
+  println(decorate(right = "}", left = "{", str = "Hello"))
+
+}

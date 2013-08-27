@@ -1,13 +1,15 @@
+package various.callcc
+
 object callccInterpreter {
 
   type Answer = Value;
 
-  /** 
-   * A continuation monad. 
+  /**
+   * A continuation monad.
    */
   case class M[A](in: (A => Answer) => Answer) {
-    def bind[B](k: A => M[B])          = M[B](c => in (a => k(a) in c))
-    def map[B](f: A => B): M[B]        = bind(x => unitM(f(x)))
+    def bind[B](k: A => M[B]) = M[B](c => in(a => k(a) in c))
+    def map[B](f: A => B): M[B] = bind(x => unitM(f(x)))
     def flatMap[B](f: A => M[B]): M[B] = bind(f)
   }
 
@@ -23,7 +25,7 @@ object callccInterpreter {
 
   trait Term
   case class Var(x: Name) extends Term
-  case class Con(n: int) extends Term
+  case class Con(n: Int) extends Term
   case class Add(l: Term, r: Term) extends Term
   case class Lam(x: Name, body: Term) extends Term
   case class App(fun: Term, arg: Term) extends Term
@@ -31,7 +33,7 @@ object callccInterpreter {
 
   trait Value
   case object Wrong extends Value {
-   override def toString() = "wrong"
+    override def toString() = "wrong"
   }
   case class Num(n: Int) extends Value {
     override def toString() = n.toString()
@@ -60,15 +62,17 @@ object callccInterpreter {
   def interp(t: Term, e: Environment): M[Value] = t match {
     case Var(x) => lookup(x, e)
     case Con(n) => unitM(Num(n))
-    case Add(l, r) => for (val a <- interp(l, e);
-			          val b <- interp(r, e);
-			          val c <- add(a, b))
-                      yield c
+    case Add(l, r) => for (
+      a <- interp(l, e);
+      b <- interp(r, e);
+      c <- add(a, b)
+    ) yield c
     case Lam(x, t) => unitM(Fun(a => interp(t, Pair(x, a) :: e)))
-    case App(f, t) => for (val a <- interp(f, e);
-			          val b <- interp(t, e);
-			          val c <- apply(a, b))
-	      yield c
+    case App(f, t) => for (
+      a <- interp(f, e);
+      b <- interp(t, e);
+      c <- apply(a, b)
+    ) yield c
     case Ccc(x, t) => callCC(k => interp(t, Pair(x, Fun(k)) :: e))
   }
 

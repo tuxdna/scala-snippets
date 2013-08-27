@@ -1,3 +1,5 @@
+package various.upper3
+
 //comment
 object Upper {
   def main(args: Array[String]) {

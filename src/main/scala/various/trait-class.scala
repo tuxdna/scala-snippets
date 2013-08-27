@@ -1,4 +1,4 @@
-
+package various.traits
 
 object NullWorld extends App {
   trait A {

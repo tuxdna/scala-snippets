@@ -1,6 +1,12 @@
-//comment
-object Upper {
-  def upper(strings: String*): Seq[String] = strings.map(_.toUpperCase())
-}
+package various.upper2
 
-Console.println(Upper.upper("A", "First", "Scala", "Program"))
+object test {
+
+  //comment
+  object Upper {
+    def upper(strings: String*): Seq[String] = strings.map(_.toUpperCase())
+  }
+
+  Console.println(Upper.upper("A", "First", "Scala", "Program"))
+
+}
