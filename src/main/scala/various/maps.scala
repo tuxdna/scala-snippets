@@ -56,7 +56,8 @@ object test {
   val t = (1, 3.14, "Fred")
 
   {
-    val second = t._2 // Sets second to 3.14  
+    val second = t._2 // Sets second to 3.14
+    println(second)
   }
   
   {

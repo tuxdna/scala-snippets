@@ -1,7 +1,5 @@
+package various.shapes
 
-//
-
-package various.shapes {
   class Point(val x: Double, val y: Double) {
     override def toString() = "Point(" + x + "," + y + ")"
   }
@@ -28,4 +26,3 @@ package various.shapes {
     override def toString() =
       "Triangle(" + point1 + "," + point2 + "," + point3 + ")"
   }
-}
