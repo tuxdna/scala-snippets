@@ -1,6 +1,6 @@
 object intro extends App {
 
-  println("Welcome to the Scala")
+  println("Welcome to Scala")
   def add(a: Int, b: Int): Int = {
     a + b
   }
@@ -51,7 +51,7 @@ object intro extends App {
   }
 
   class User {
-    SingletonObject.bar
+    println(SingletonObject.bar)
   }
 
   class Person(name: String, val age: Int) {
@@ -74,11 +74,45 @@ object intro extends App {
     throw new NullPointerException
   } catch {
     case e: IllegalArgumentException => println("requirement test suceeded")
-    case _ => println("Some weird error happened")
+    case _: Throwable => println("Some weird error happened")
   }
 
   p2 + "Too"
   p1.+("from India")
 
-  p2.age
+  println(p2.age)
+
+
+
+  def incfun(x: Int) = x + 1 // incfun: (x: Int)Int
+  def applyon(x: Int, myfun: Int => Int) = myfun(x) // applyon: (x: Int, myfun: Int => Int)Int
+  applyon(10, incfun) // res8: Int = 11
+  def plus5(x: Int) = x + 5 // plus5: (x: Int)Int
+  applyon(10, plus5) // res9: Int = 15
+
+  def myfunc(x: Int): Int => Int = {
+    def f(y: Int) = y + x
+    f
+  }
+  // myfunc: (x: Int)Int => Int
+
+  val incby4 = myfunc(4) // incby4: Int => Int = <function1>
+  incby4(10) // res10: Int = 14
+
+  import scala.math._
+  pow(3,Pi) // res15: Double = 31.54428070019754
+
+  // apply method
+  "Hello"(4) // res23: Char = o
+  "Hello".apply(4) // res24: Char = o
+
+  // object construction using apply
+  // a common scala idiom to construct objects
+  BigInt(10) // res26: scala.math.BigInt = 10
+  BigInt.apply(10) // res27: scala.math.BigInt = 10
+  val x = 20
+  val sign = if(x > 0) +1 else -1
+  println(sign)
+  println(sign)
+  
 }
