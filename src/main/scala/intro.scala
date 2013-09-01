@@ -176,7 +176,6 @@ object intro extends App {
 
   for (i <- output) print(i + " "); println
 
-  
   // maps in scala
   val m1 = Map(1 -> "One", 2 -> "Two", 3 -> "Three")
   val m2 = m1 + (4 -> "Four")
@@ -200,7 +199,31 @@ object intro extends App {
   val months = scala.collection.mutable.LinkedHashMap("January" -> 1,
     "February" -> 2, "March" -> 3, "April" -> 4, "May" -> 5)
   println(months)
-  
-  
+
+  // classes take parameters in Scala
+  class A(val args: String*) {
+    def this(name: String, args: Int*) {
+      this(name)
+      for (i <- args) print(i + " "); println()
+    }
+
+    /*
+     * uncomment this auxiliary constructor to 
+     * get compile time error: ambiguous constructor
+     * https://issues.scala-lang.org/browse/SI-2991
+     
+    def this(name: String, args: String*) {
+      this(name + args)
+      for (i <- args) print(i + " "); println()
+    }
+    
+    
+    * 
+    */
+  }
+
+  val a1 = new A("hello", 1, 2, 3, 4)
+  println(a1.args)
+
 }
 
