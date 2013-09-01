@@ -1,3 +1,5 @@
+
+
 object intro extends App {
 
   println("Welcome to Scala")
@@ -18,9 +20,12 @@ object intro extends App {
   }
 
   List(1, 2, 3).foreach(l => println(l))
+
   List(1, 2, 3) foreach println
-  (1 to 5).toList foreach println
-  List(1 to 100) foreach println
+
+  List(1 to 10) foreach println
+
+  (1 to 5).toList foreach print; println
 
   // Mutability
   val gs = new Array[String](3)
@@ -82,25 +87,23 @@ object intro extends App {
 
   println(p2.age)
 
-
-
+  // function as an argument
   def incfun(x: Int) = x + 1 // incfun: (x: Int)Int
   def applyon(x: Int, myfun: Int => Int) = myfun(x) // applyon: (x: Int, myfun: Int => Int)Int
   applyon(10, incfun) // res8: Int = 11
   def plus5(x: Int) = x + 5 // plus5: (x: Int)Int
   applyon(10, plus5) // res9: Int = 15
 
+  // function as a return value
   def myfunc(x: Int): Int => Int = {
-    def f(y: Int) = y + x
-    f
-  }
-  // myfunc: (x: Int)Int => Int
-
+    def fun(y: Int) = y + x
+    return fun
+  } // myfunc: (x: Int)Int => Int
   val incby4 = myfunc(4) // incby4: Int => Int = <function1>
-  incby4(10) // res10: Int = 14
+  println("increment 10 by 4: " + incby4(10)) // res10: Int = 14
 
   import scala.math._
-  pow(3,Pi) // res15: Double = 31.54428070019754
+  pow(3, Pi) // res15: Double = 31.54428070019754
 
   // apply method
   "Hello"(4) // res23: Char = o
@@ -111,8 +114,93 @@ object intro extends App {
   BigInt(10) // res26: scala.math.BigInt = 10
   BigInt.apply(10) // res27: scala.math.BigInt = 10
   val x = 20
-  val sign = if(x > 0) +1 else -1
+  val sign = if (x > 0) +1 else -1
   println(sign)
   println(sign)
+
+  // variable number of function arguments
+  def sum(args: Int*) = {
+    var result = 0
+    for (arg <- args) result += arg
+    result
+  } // sum: (args: Int*)Int
+  sum(1, 2, 3, 4) // res16: Int = 10
+  // sum(1 to 10) //  error: type mismatch; found   : scala.collection.immutable.Range.Inclusive, required: Int
+  sum(1 to 10: _*) // res20: Int = 55
+
+  def sumRecursive(args: Int*): Int = {
+    if (args.length == 0) 0
+    else args.head + sumRecursive(args.tail: _*)
+  }
+
+  def recursiveSum(args: Int*): Int = {
+    if (args.length == 0) 0
+    else args.head + recursiveSum(args.tail: _*)
+  }
+
+  // exception handling
+  // try {} catch {} finally {}
+  import java.net.URL
+  import java.io.InputStream
+  import java.net.MalformedURLException
+  import java.net.UnknownHostException
+  import java.io.IOException
+  import java.io.FileNotFoundException
+
+  def trycatch = {
+    def process(stream: InputStream) = {
+      stream.read()
+    }
+    val url = new URL("http://horstmann.com/fred.gif")
+    var stream: InputStream = null
+    try {
+      stream = url.openStream()
+      process(stream)
+    } catch {
+      case ex1: MalformedURLException => println("Bad URL: " + url)
+      case ex: UnknownHostException => println("host not found: " + ex.getMessage)
+      case ex: FileNotFoundException => println("file not found: " + ex.getMessage)
+      case ex2: IOException => println(ex2)
+    } finally {
+      stream.close()
+    }
+  }
+
+  // trycatch
+
+  val output = {
+    val a = Array(1, 2, 3, 4, 5, 6, 7, 8)
+    for (i <- a if i % 2 == 0) yield i * i
+    for (i <- a if i % 2 != 0) yield i * i
+  }
+
+  for (i <- output) print(i + " "); println
+
+  
+  // maps in scala
+  val m1 = Map(1 -> "One", 2 -> "Two", 3 -> "Three")
+  val m2 = m1 + (4 -> "Four")
+  val m3 = m1 + (1 -> "First", 5 -> "Fifth")
+  println(m1)
+  println(m2)
+  println(m3)
+  val m4 = m1 ++ m2 ++ m3
+  for ((k, v) <- m4) println(k + ": " + v)
+  val m5 = scala.collection.mutable.Map("Jan" -> 1, "Feb" -> 2)
+  m5("Mar") = 3
+  println(m5)
+  println(m5.getOrElse("Apr", 0))
+  m5 -= "Jan"
+  println(m5)
+
+  import scala.collection.immutable.SortedMap
+  val m6 = SortedMap(1 -> "One", 2 -> "Two", 3 -> "Three")
+  println(m6)
+
+  val months = scala.collection.mutable.LinkedHashMap("January" -> 1,
+    "February" -> 2, "March" -> 3, "April" -> 4, "May" -> 5)
+  println(months)
+  
   
 }
+
