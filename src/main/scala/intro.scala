@@ -224,6 +224,16 @@ object intro extends App {
 
   val a1 = new A("hello", 1, 2, 3, 4)
   println(a1.args)
+  
+  // private  constructor in Scala
+  class B private(val name: String) {
+    def this(name: String, age: Int) = {
+      this(name)
+    }
+  }
+  
+  val b1 = new B("somebody", 100)
+  println(b1.name)
 
 }
 
