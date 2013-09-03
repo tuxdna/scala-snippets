@@ -224,16 +224,61 @@ object intro extends App {
 
   val a1 = new A("hello", 1, 2, 3, 4)
   println(a1.args)
-  
+
   // private  constructor in Scala
-  class B private(val name: String) {
+  class B private (val name: String) {
     def this(name: String, age: Int) = {
       this(name)
     }
   }
-  
+
   val b1 = new B("somebody", 100)
   println(b1.name)
+
+  // with companion object
+  {
+    class C(val name: String)
+
+    object C {
+      def create(name: String) = new C(name)
+    }
+
+    val c1 = C.create("some one")
+    println(c1.name)
+  }
+
+  {
+    klazz.klazz.myprint
+    val p1 = new klazz.Person("You", 80)
+    val p2 = new klazz.Employee(26)
+    println(p1)
+    println(p2)
+  }
+}
+
+package klazz {
+
+  // package object
+  object klazz {
+    def myprint = println("Hello")
+  }
+
+  class Person(name: String, val age: Int) {
+    require(age >= 25)
+    def this(name: String) = this(name, 25)
+    def this(age: Int) = this("Me", age)
+    override def toString = name + " " + age
+    def +(surname: String) = {
+      name + " " + surname
+    }
+  }
+
+  // inheritance
+  class Employee(name: String, age: Int, var salary: Double) extends Person(name: String, age: Int) {
+    def this(name: String) = this(name, 25, 0.0)
+    def this(age: Int) = this("Me", age, 0.0)
+    override def toString = name + " " + age + " - earns: " + salary
+  }
 
 }
 
