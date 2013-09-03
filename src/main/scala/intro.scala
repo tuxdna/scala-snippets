@@ -59,33 +59,6 @@ object intro extends App {
     println(SingletonObject.bar)
   }
 
-  class Person(name: String, val age: Int) {
-    require(age >= 25)
-    def this(name: String) = this(name, 25)
-    def this(age: Int) = this("Me", age)
-    override def toString = name + " " + age
-    def +(surname: String) = {
-      name + " " + surname
-    }
-  }
-
-  val p1 = new Person("tuxdna", 28)
-  val p2 = new Person("some")
-
-  // try catch throw
-  try {
-    val p3 = new Person(22)
-    val k = 123.5 / 0.0
-    throw new NullPointerException
-  } catch {
-    case e: IllegalArgumentException => println("requirement test suceeded")
-    case _: Throwable => println("Some weird error happened")
-  }
-
-  p2 + "Too"
-  p1.+("from India")
-
-  println(p2.age)
 
   // function as an argument
   def incfun(x: Int) = x + 1 // incfun: (x: Int)Int
@@ -118,6 +91,24 @@ object intro extends App {
   println(sign)
   println(sign)
 
+
+  // arrays
+  val numbers = new Array[Int](5)
+  numbers(0) = 12
+  numbers(1) = 24
+  numbers(2) = 22
+  numbers(3) = 54
+  numbers(4) = 10
+
+  val nums = Array(12, 24, 22, 54, 10)
+
+  import scala.collection.mutable.ArrayBuffer
+  val ab = new ArrayBuffer[Int]()
+  ab += 1
+  ab += 2
+  ab += (3,4,5)
+
+  
   // variable number of function arguments
   def sum(args: Int*) = {
     var result = 0
@@ -247,13 +238,63 @@ object intro extends App {
     println(c1.name)
   }
 
+  class Person(name: String, val age: Int) extends Serializable {
+    require(age >= 25)
+    def this(name: String) = this(name, 25)
+    def this(age: Int) = this("Me", age)
+    override def toString = name + " " + age
+    def +(surname: String) = {
+      name + " " + surname
+    }
+  }
+
   {
     klazz.klazz.myprint
     val p1 = new klazz.Person("You", 80)
     val p2 = new klazz.Employee(26)
-    println(p1)
-    println(p2)
+    println(p1); println(p2); println("Done")
   }
+
+  // file handling
+  import scala.io.Source
+  val tokens = Source.fromFile("/proc/cpuinfo").mkString.split("\\s+")
+
+  val allnumbers = tokens filter { x =>
+    try { x.toDouble; true }
+    catch { case _ => false } 
+  } map( _.toDouble) toSet
+
+  println(allnumbers)
+
+  val p1 = new Person("tuxdna", 28)
+  val p2 = new Person("some")
+
+  // try catch throw
+  try {
+    val p3 = new Person(22)
+    val k = 123.5 / 0.0
+    throw new NullPointerException
+  } catch {
+    case e: IllegalArgumentException => println("requirement test suceeded")
+    case _: Throwable => println("Some weird error happened")
+  }
+
+  println(p2 + "Too")
+  println(p1.+("from India"))
+
+  println(p2.age)
+
+  // serialize to file and read back
+  import java.io._
+  val out = new ObjectOutputStream(new FileOutputStream("/tmp/test.obj"))
+  out.writeObject(p1)
+  out.close()
+
+  val in = new ObjectInputStream(new FileInputStream("/tmp/test.obj"))
+  val p1saved = in.readObject().asInstanceOf[Person]
+  println("p1 actual: " + p1)
+  println("p1 from file: " + p1saved)
+
 }
 
 package klazz {
