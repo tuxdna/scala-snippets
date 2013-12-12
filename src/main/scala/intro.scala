@@ -1,5 +1,9 @@
 
 
+import java.util.zip.GZIPInputStream
+import scala.io.UTF8Codec
+import java.util.zip.ZipInputStream
+
 object intro extends App {
 
   println("Welcome to Scala")
@@ -295,6 +299,9 @@ object intro extends App {
   println("p1 actual: " + p1)
   println("p1 from file: " + p1saved)
 
+    def gis(s: String) = new ZipInputStream(new BufferedInputStream(new FileInputStream(s)))
+  // ZipInputStream
+  // UTF8Codec
 }
 
 package klazz {
