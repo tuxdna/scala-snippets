@@ -1,10 +1,6 @@
 package multithread
 
 import java.util.concurrent.Callable
-import java.util.concurrent.FutureTask
-import scala.parallel.Future
-import scala.actors.threadpool.ExecutorService
-import scala.actors.threadpool.Executors
 
 object examples extends App {
 

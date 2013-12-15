@@ -1,10 +1,9 @@
 package multithread
 
-import scala.parallel.Future
-import scala.actors.threadpool.ExecutorService
-import scala.actors.threadpool.Executors
-import scala.actors.threadpool.Callable
 import scala.util.Random
+import java.util.concurrent.Executors
+import scala.concurrent._
+import java.util.concurrent.Callable
 
 object infuture extends App {
 
@@ -22,11 +21,11 @@ object infuture extends App {
 
   val poolSize = 4
 
-  val pool: ExecutorService = Executors.newFixedThreadPool(poolSize)
+  val pool = Executors.newFixedThreadPool(poolSize)
 
   val futures = (1 to 10).map { x =>
     {
-      val callable = new Callable() {
+      val callable = new Callable[String]() {
         def call(): String = {
           searcher.search("hello" + x);
         }
@@ -43,4 +42,5 @@ object infuture extends App {
     println(result)
   }
 
+  pool.shutdown()
 }
