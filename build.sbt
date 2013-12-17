@@ -11,3 +11,8 @@ libraryDependencies += "com.netflix.rxjava" % "rxjava-scala" % "0.15.0"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.2.3"
 
+libraryDependencies += "org.scala-lang.modules" %% "scala-async" % "0.9.0-M2"
+
+libraryDependencies += "org.scala-lang" % "scala-actors" % "2.10.2"
+
+
