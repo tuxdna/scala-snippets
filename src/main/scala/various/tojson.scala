@@ -10,12 +10,12 @@ def toJson(a: Any): String = {
       case m: String => "\"" + m + "\""
       
       // map
-      case m: Map[AnyRef, AnyRef] => {
+      case m: Map[_, _] => {
         "{" + (m map { x => val key = x._1; toJson(key) + ": " + toJson(m(key)) } mkString (", ")) + "}"
       }
 
       // list
-      case l: Seq[AnyRef] => { "[" + (l map (toJson(_)) mkString (",")) + "]" }
+      case l: Seq[_] => { "[" + (l map (toJson(_)) mkString (",")) + "]" }
 
       // for anything else: tuple
       case m: Product => toJson(m.productIterator.toList)
