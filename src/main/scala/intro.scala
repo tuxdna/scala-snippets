@@ -265,7 +265,7 @@ object intro extends App {
 
   val allnumbers = tokens filter { x =>
     try { x.toDouble; true }
-    catch { case _ => false } 
+    catch { case _: Throwable => false } 
   } map( _.toDouble) toSet
 
   println(allnumbers)
@@ -298,6 +298,8 @@ object intro extends App {
   val p1saved = in.readObject().asInstanceOf[Person]
   println("p1 actual: " + p1)
   println("p1 from file: " + p1saved)
+  
+  // import scala.tools.nsc.MainGenericRunner
 
     def gis(s: String) = new ZipInputStream(new BufferedInputStream(new FileInputStream(s)))
   // ZipInputStream
