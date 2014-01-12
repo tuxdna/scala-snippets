@@ -5,10 +5,9 @@ import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import java.awt.Graphics
 import java.awt.Color
-import javax.swing.JPanel
 
 object frameexample extends App {
-  class DrawRectPanel extends JPanel {
+  class DrawRectPanel extends javax.swing.JPanel {
     override def paintComponent(g: Graphics) {
       super.paintComponent(g)
       g.setColor(Color.blue)

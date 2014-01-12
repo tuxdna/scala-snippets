@@ -4,10 +4,8 @@ import java.awt.Rectangle
 import javax.swing.JFrame
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
-import java.awt.Container
 import java.awt.Graphics
 import java.awt.Color
-import javax.swing.JPanel
 import java.awt.geom.Ellipse2D
 
 object ex01 extends App {
@@ -20,7 +18,7 @@ object ex01 extends App {
   })
 
   val contentPane = frame.getContentPane()
-  contentPane.add(new JPanel {
+  contentPane.add(new javax.swing.JPanel {
     override def paintComponent(g: Graphics) {
       super.paintComponent(g)
     }

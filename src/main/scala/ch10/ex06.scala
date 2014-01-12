@@ -1,13 +1,13 @@
 package ch10
 
 trait Component
-trait JComponent extends Component
-trait JButton extends JComponent
+trait AComponent extends Component
+trait AButton extends AComponent
 
 trait Container extends Component
-trait JContainer extends Container
-trait JPanel extends JContainer
+trait AContainer extends Container
+trait APanel extends AContainer
 
 object ex06 extends App {
-  println(classOf[JPanel])
+  println(classOf[APanel])
 }
