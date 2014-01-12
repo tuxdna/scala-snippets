@@ -11,6 +11,7 @@ object ex04 extends App {
       Money(this.dollar + that.dollar, this.cent + that.cent)
     }
     def -(that: Money) = {
+      //TODO: Fix substraction
       Money(this.dollar - that.dollar, this.cent - that.cent)
     }
   }
