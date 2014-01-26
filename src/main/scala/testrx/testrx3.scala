@@ -41,17 +41,15 @@ object testrx3 extends App {
   Seq("hello", "world", "again", "not anymore") foreach { msg =>
     receiver ! Hello(msg)
   }
+
   subscription.unsubscribe
   system.shutdown
 
   def observableFromActor(actor: ActorRef): Observable[Message] =
-    Observable { observer =>
+    Observable.create { observer =>
       actor ! Subscribe(observer onNext)
       new Subscription {
         override def unsubscribe: Unit = actor ! Unsubscribe
-        val asJavaSubscription: rx.Subscription = ???
-        def isUnsubscribed: Boolean = ???
-
       }
     }
 }

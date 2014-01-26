@@ -61,7 +61,7 @@ object Observer05 extends App {
     val ticks: Observable[Long] = Observable.interval(1 second)
     val marbles: Observable[T] = ticks.take(6).map(i => (i, circles(i.toInt)._1, circles(i.toInt)._2))
     val squareMarbles: Observable[T] = marbles.map(s => (s._1, s._2, "Square"))
-    val fails: Observable[T] = marbles.take(3) ++ Observable(new Exception("My Bad")) ++ squareMarbles
+    val fails: Observable[T] = /* marbles.take(3) ++ Observable(new Exception("My Bad")) ++ */ squareMarbles
     val eReturn: Observable[T] = fails.onErrorReturn(e => (-99, "Black", "Diamond"))
     val eResume: Observable[T] = fails.onErrorResumeNext(squareMarbles)
     // Unlike the iterable case, we are able to "traverse" the observable

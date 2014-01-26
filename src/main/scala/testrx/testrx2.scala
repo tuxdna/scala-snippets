@@ -28,14 +28,4 @@ object testrx2 extends App {
     }
   }
 
-  def observableFromActor(actor: ActorRef): Observable[Message] =
-    Observable { observer =>
-      actor ! Subscribe(observer onNext)
-      new Subscription {
-        override def unsubscribe: Unit = actor ! Unsubscribe
-        val asJavaSubscription: rx.Subscription = ???
-        def isUnsubscribed: Boolean = ???
-
-      }
-    }
 }

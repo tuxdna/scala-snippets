@@ -25,7 +25,11 @@ object Observer02 extends App {
     val ticks: Observable[Long] = Observable.interval((i * 1000 + 500) millis)
     val evens: Observable[Long] = ticks.filter(s => (s % 2 == 0))
     val bufs: Observable[Seq[Long]] = ticks.buffer(2, 1)
-    val fails: Observable[Long] = ticks.take(3) ++ Observable(new Exception("oops")) ++ ticks
+    def errorfn: Long = {
+      new Exception("oops")
+      0
+    }
+    val fails: Observable[Long] = ticks.take(3) ++ Observable.from(List(errorfn)) ++ ticks
 
     printOut(i)(ticks)(num)("ticks")
     printOut(i)(evens)(num)("evens")
