@@ -9,6 +9,11 @@ import java.io.File
 import scala.io.Source
 import scala.collection.JavaConversions._
 import scala.collection.mutable
+import java.io.BufferedWriter
+import java.io.OutputStream
+import java.io.FileOutputStream
+import java.io.FileWriter
+import java.io.PrintStream
 
 object termsMatrix extends App {
 
@@ -20,7 +25,7 @@ object termsMatrix extends App {
     println("Number of Documents: " + ir.numDocs())
     val terms = ir.terms();
     val termIdMap = mutable.Map.empty[String, Int]
-    var currentTermId = 0
+    var currentTermId = 1
     while (terms.next()) {
       val term = terms.term();
       val termString = term.text()
@@ -35,6 +40,19 @@ object termsMatrix extends App {
       termIdMap += (termString -> termId)
     }
 
+    val entriesFile = new File(outputLocation, "termsList.dat")
+    val psEntries = new PrintStream(entriesFile)
+    
+    println("Writing (termId -> term) entries to: " + entriesFile.getAbsolutePath())
+    termIdMap.foreach { e =>
+      psEntries.println(e._2 + "\t" + e._1)
+    }
+    psEntries.close()
+
+    val matrixFile = new File(outputLocation, "matrix.dat")
+    val psMatrix = new PrintStream(matrixFile)
+    
+    println("Writing matrix entries to: " + matrixFile.getAbsolutePath())
     for (docId <- 0 until ir.numDocs() if !ir.isDeleted(docId)) {
       val d = ir.document(docId)
       val fieldBody = d.getField(FIELD_BODY)
@@ -43,18 +61,24 @@ object termsMatrix extends App {
         val term = e._1
         val freq = e._2
         val termId = termIdMap(term)
-        println(List(docId + 1, termId + 1, freq).mkString(" "))
+        psMatrix.println(List(docId + 1, termId, freq).mkString(" "))
       }
     }
+    psMatrix.close()
   }
 
-  val outputPath = args(0)
-  val indexLocation = new File(outputPath)
+  val indexPath = args(0)
+  val outputPath = args(1)
+  val indexLocation = new File(indexPath)
   println("Reading")
   if (indexLocation.isDirectory()) {
     println("Reading")
     val dir = FSDirectory.open(indexLocation)
     val reader = IndexReader.open(dir, true)
-    printTermsMatrix(new File(outputPath), reader)
+    val outputLocation = new File(outputPath)
+    if (!outputLocation.isDirectory()) {
+      outputLocation.mkdirs()
+    }
+    printTermsMatrix(outputLocation, reader)
   }
 }
