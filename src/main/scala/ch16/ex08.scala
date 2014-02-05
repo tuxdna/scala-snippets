@@ -1,4 +1,5 @@
 package ch16
+import scala.xml
 
 object ex08 extends App {
   def toMap(x: xml.Elem) = {
