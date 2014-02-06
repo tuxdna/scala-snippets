@@ -19,8 +19,17 @@ import java.io.InputStream
 import java.io.ByteArrayInputStream
 import java.util.Vector
 import scala.collection.JavaConversions._
-
+import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.MediaWikiParserFactory
+import de.tudarmstadt.ukp.wikipedia.parser.Link
+/*
+ * Using:
+ * https://code.google.com/p/wikixmlj/ 
+ * https://code.google.com/p/jwpl/wiki/JWPLParser
+ */
 object wikipage extends App {
+
+  val markupParserFactory = new MediaWikiParserFactory()
+  val markupParser = markupParserFactory.createParser()
 
   def parseXml(f: File) = {
     Try {
@@ -50,18 +59,42 @@ object wikipage extends App {
             "isDisambiguationPage" -> page.isDisambiguationPage(),
             "isSpecialPage" -> page.isSpecialPage(),
             "isStub" -> page.isStub(),
-            "text" -> page.getText(),
+            // "text" -> page.getText(),
             "categories" -> page.getCategories().toList.toString).toString)
+
+        // val text = Option(page.getText()) match { case None => "" case Some(x) => x }
+        val pars = markupParser.parse(page.getText())
+        // only the links to other Wikipedia language editions
+        val languages = Try { pars.getLanguages().toList } match {
+          case Failure(t) => List() case Success(x) => x
+        }
+
+        //println(pars.getText())
+        //println("tables")
+        //pars.getParagraphs().foreach(p => println(p.getText))
+        pars.getSections().foreach { section =>
+          println(("    " * section.getLevel()) + "Section: " + section.getTitle())
+          // section.getDefinitionLists().foreach(d => d.getDefinedTerm().toString())
+          println(section.getText())
+          section.getLinks(Link.`type`.INTERNAL).foreach { link =>
+            println("  " + link.getTarget())
+          }
+          println()
+          println()
+        }
       }
+
     } match {
       case Success(d) => d
       case Failure(t) => t.printStackTrace()
     }
   }
 
-  val location = new File(args(0))
-  for (s <- location.listFiles()) {
+  val wikidir = args(0)
+  val location = new File(wikidir)
+  for (s <- location.listFiles() // if s.getAbsolutePath().endsWith("25.xml")
+      ) {
     println(s.getAbsolutePath())
-    parseXml(s);
+    parseXml(s)
   }
 }
