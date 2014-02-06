@@ -20,7 +20,6 @@ libraryDependencies += "org.scala-lang" % "scala-actors" % "2.10.2"
 
 // libraryDependencies += "org.apache.mahout" % "mahout-examples" % "0.8"
 
-
 libraryDependencies += "de.tudarmstadt.ukp.wikipedia" % "de.tudarmstadt.ukp.wikipedia.parser" % "0.9.2"
 
 libraryDependencies += "de.tudarmstadt.ukp.wikipedia" % "de.tudarmstadt.ukp.wikipedia.api" % "0.9.2"
