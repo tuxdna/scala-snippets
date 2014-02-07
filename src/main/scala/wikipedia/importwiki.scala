@@ -1,15 +1,15 @@
-package xml
+package wikipedia
 import com.mongodb.casbah.MongoClient
 import scala.io.Source
 import scala.xml.pull._
 import scala.collection.mutable.ArrayBuffer
 import java.io.File
-import java.io.FileOutputStream
 import scala.xml.XML
 import com.mongodb.casbah.MongoCollection
 import com.mongodb.casbah.commons.MongoDBObject
 
 object importwiki extends App {
+  //[success] Total time: 7457 s, completed Feb 7, 2014 2:21:30 AM
 
   object Config {
     val dbName = "wikipedia01"

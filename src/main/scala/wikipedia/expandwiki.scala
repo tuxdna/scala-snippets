@@ -39,7 +39,7 @@ object expandwiki extends App {
       val pars = markupParser.parse(wikiText)
       val plainText = pars.getSections().map { section =>
         ("    " * section.getLevel()) +
-          section.getTitle() + "\n" +
+          Option(section.getTitle()).getOrElse("") + "\n" +
           section.getText() + "\n\n"
       }.mkString
 
@@ -73,7 +73,7 @@ object expandwiki extends App {
     Try(decode(x)) match {
       case Failure(t) => t.printStackTrace()
       case Success(a) => // update a
-        println("adding attributes : _id -> "+ x.get("_id"))
+        println("adding attributes : _id -> " + x.get("_id"))
         val uo = MongoDBObject.newBuilder
         uo.++=(a)
         val update = MongoDBObject("$set" -> uo.result)
