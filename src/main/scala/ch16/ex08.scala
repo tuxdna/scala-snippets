@@ -1,7 +1,10 @@
 package ch16
+import scala.xml
+
+import scala.xml.Elem
 
 object ex08 extends App {
-  def toMap(x: xml.Elem) = {
+  def toMap(x: Elem) = {
     val dt = x \\ "dt"
     val dd = x \\ "dd"
 

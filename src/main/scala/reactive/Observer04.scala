@@ -16,8 +16,7 @@ object Observer04 extends App {
     ("Green", "Circle"),
     ("Aqua", "Circle"),
     ("Blue", "Circle"),
-    ("Violet", "Circle")
-  )
+    ("Violet", "Circle"))
 
   def printOutMarbles(i: Int)(obs: Observable[T])(num: Int)(indent: Int): Unit = {
     blocking { Thread.sleep(20) }
@@ -36,11 +35,15 @@ object Observer04 extends App {
   }
 
   def block(i: Int)(num: Int) = {
+    def errorfn: Long = {
+      new Exception("oops")
+      0
+    }
     println("Observable: " + i.toString)
     val ticks: Observable[Long] = Observable.interval(500 millis)
     val marbles: Observable[T] = ticks.take(6).map(i => (i, circles(i.toInt)._1, circles(i.toInt)._2))
     val squareMarbles: Observable[T] = marbles.map(s => (s._1, s._2, "Square"))
-    val fails: Observable[T] = marbles.take(3) ++ Observable(new Exception("My Bad")) ++ squareMarbles
+    val fails: Observable[T] = /* marbles.take(3) ++ Observable(new Exception("My Bad")) ++ */ squareMarbles
     val eReturn: Observable[T] = fails.onErrorReturn(e => (-99, "Black", "Diamond"))
     val eResume: Observable[T] = fails.onErrorResumeNext(squareMarbles)
 

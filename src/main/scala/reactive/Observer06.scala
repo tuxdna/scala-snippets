@@ -35,7 +35,7 @@ object Observer06 extends App {
     val t0 = System.nanoTime()
     def etime() = ((System.nanoTime() - t0).toDouble / 1e+9)
     println("Observable: " + i.toString)
-    val xs: Observable[Int] = Observable(3,2,1)
+    val xs: Observable[Int] = Observable.from(List(3,2,1))
     val yss: Observable[Observable[Int]] =
       xs.map(x => Observable.interval(x seconds).map(_=>x).take(2))
     val zs: Observable[Int] =
