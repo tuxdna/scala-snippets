@@ -1,6 +1,7 @@
 package ch16
 
 object ex05 extends App {
+
   val xml = <html>
               <head>
                 <title> My list of jokes </title>
@@ -21,4 +22,5 @@ object ex05 extends App {
       case Some(a) => true; case _ => false
     }
   } foreach (a => println(a.get))
+
 }

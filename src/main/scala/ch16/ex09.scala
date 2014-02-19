@@ -5,6 +5,7 @@ import scala.xml._
 import scala.xml.transform.RuleTransformer
 
 object ex09 extends App {
+
   val xml = <html>
               <head>
                 <title> My list of jokes </title>

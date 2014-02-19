@@ -9,4 +9,5 @@ object ex08 extends App {
   val length = Array(5, 5)
   val d = a.corresponds(length)(_.length == _)
   println(d)
+
 }

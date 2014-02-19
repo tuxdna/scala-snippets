@@ -1,6 +1,7 @@
 package ch12
 
 object ex10 extends App {
+
   def unless(condition: => Boolean)(block: => Unit) {
     if (!condition) {
       block

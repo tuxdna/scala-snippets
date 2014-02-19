@@ -1,6 +1,7 @@
 package ch16
 
 object ex04 extends App {
+
   val xml = <html>
               <head>
                 <title> My list of jokes </title>
