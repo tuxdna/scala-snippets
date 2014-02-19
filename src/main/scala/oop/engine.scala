@@ -12,10 +12,6 @@ object engine {
 
   import FuelLevel._
 
-  trait Make {
-    def make: String
-  }
-
   // trait Stoppable { def stop }
   trait Stoppable {
     var running: Boolean
@@ -51,13 +47,6 @@ object engine {
       .format(running, fuelLevel, horsePower)
   }
 
-  class SteamEngine(hp: Int, state: Boolean, fl: FuelLevel, modelName: String)
-    extends Engine(hp, state, fl) with Make {
-    private val model = modelName
-    def this(hp: Int, state: Boolean, fl: FuelLevel) = this(hp, state, fl, "Toy")
-    def make = "SteamEngine - " + model
-  }
-
   class TwoStrokeEngine(hp: Int, state: Boolean, fl: FuelLevel)
     extends Engine(hp, state, fl) {
     override def toString = "TwoStroke" + super.toString()
@@ -68,6 +57,17 @@ object engine {
     override def toString = "FourStroke" + super.toString()
   }
 
+  trait Make {
+    def make: String
+  }
+
+  class SteamEngine(hp: Int, state: Boolean, fl: FuelLevel, modelName: String)
+    extends Engine(hp, state, fl) with Make {
+    private val model = modelName
+    def this(hp: Int, state: Boolean, fl: FuelLevel) = this(hp, state, fl, "Toy")
+    def make = "SteamEngine - " + model
+  }
+  
   def main(args: Array[String]) {
     val e1 = new FourStrokeEngine(40, false, FuelLevel.Empty)
     println(e1)
@@ -85,7 +85,7 @@ object engine {
     println(e3)
     println(e3.make + "\n")
 
-    val myengines = List(e1, e2, e3)
+    val myengines = Array(e1, e2, e3)
     println(myengines + "\n")
   }
 }
