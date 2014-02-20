@@ -37,7 +37,7 @@ object expandwiki extends App {
       }
       val wikiText = page.getText()
       val pars = markupParser.parse(wikiText)
-      val plainText = pars.getSections().map { section =>
+      val plainText = pars.getSections().toList.map { section =>
         ("    " * section.getLevel()) +
           Option(section.getTitle()).getOrElse("") + "\n" +
           section.getText() + "\n\n"

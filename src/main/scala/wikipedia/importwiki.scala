@@ -7,6 +7,14 @@ import java.io.File
 import scala.xml.XML
 import com.mongodb.casbah.MongoCollection
 import com.mongodb.casbah.commons.MongoDBObject
+import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.MediaWikiParserFactory
+import java.io.ByteArrayInputStream
+import edu.jhu.nlp.wikipedia.WikiXMLParser
+import edu.jhu.nlp.wikipedia.WikiXMLDOMParser
+import edu.jhu.nlp.wikipedia.WikiPageIterator
+import edu.jhu.nlp.wikipedia.WikiPage
+
+import scala.collection.JavaConversions._
 
 object importwiki extends App {
   //[success] Total time: 7457 s, completed Feb 7, 2014 2:21:30 AM
@@ -24,15 +32,63 @@ object importwiki extends App {
     db(Config.collectionName)
   }
 
+  // db.pages.ensureIndex({isDisambiguationPage:1, isRedirect: 1, isSpecialPage: 1, isStub: 1, id: 1}) 
+  val markupParserFactory = new MediaWikiParserFactory()
+  val markupParser = markupParserFactory.createParser()
+  def decode(xml: String): Map[String, Any] = {
+    val stream = new ByteArrayInputStream(xml.getBytes("UTF-8"));
+    val parser: WikiXMLParser = new WikiXMLDOMParser(stream)
+    parser.parse()
+    val iterator: WikiPageIterator = parser.getIterator()
+    val abstractTxt: StringBuffer = new StringBuffer();
+    if (iterator.hasMorePages()) {
+      val page: WikiPage = iterator.nextPage()
+      page.isRedirect()
+      page.isDisambiguationPage()
+      page.isSpecialPage()
+      page.isStub()
+      val ib = Option(page.getInfoBox()) match {
+        case Some(x) => x.dumpRaw() case None => ""
+      }
+      val wikiText = page.getText()
+      val pars = markupParser.parse(wikiText)
+      val plainText = pars.getSections().toList.map { section =>
+        ("    " * section.getLevel()) +
+          Option(section.getTitle()).getOrElse("") + "\n" +
+          section.getText() + "\n\n"
+      }.mkString
+
+      val m = Map(
+        "xml" -> xml,
+        "id" -> page.getID(),
+        "title" -> page.getTitle(),
+        "infobox" -> ib,
+        "isRedirect" -> page.isRedirect(),
+        "isDisambiguationPage" -> page.isDisambiguationPage(),
+        "isSpecialPage" -> page.isSpecialPage(),
+        "isStub" -> page.isStub(),
+        "categories" -> page.getCategories().toList,
+        "plaintext" -> plainText,
+        "wikitext" -> wikiText)
+
+      m
+    } else {
+      Map()
+    }
+  }
+
   def writePageToDB(buf: ArrayBuffer[String], collection: MongoCollection) = {
-    val s = buf.mkString
-    val x = XML.loadString(s)
-    val pageId = (x \ "id")(0).child(0).toString
-    println(pageId)
-    val doc = MongoDBObject(
-      "xml" -> s,
-      "id" -> pageId)
-    collection.insert(doc)
+    val xml = buf.mkString
+    val attributes = decode(xml)
+    val uo = MongoDBObject.newBuilder
+    uo ++= attributes
+    val doc = uo.result
+    attributes.get("id") match {
+      case Some(id) =>
+        println(id + ": " + attributes.get("title"))
+        collection.insert(doc)
+      case None => // ignore
+    }
   }
 
   def process(xmlFile: File, collection: MongoCollection) = {
