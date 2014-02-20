@@ -127,55 +127,82 @@ object quicklook {
 
   // higher-order functions
   def transform(fn: (Int) => Int, number: Int) = fn(number)
-  //> transform: (fn: Int => Int, number: Int)Int
-  val plus5 = transform((x: Int) => x + 5, _: Int) //> plus5  : Int => Int = <function1>
-  val into3 = transform((x: Int) => x * 3, _: Int) //> into3  : Int => Int = <function1>
-  plus5(6) //> res0: Int = 11
-  into3(6) //> res1: Int = 18
+  val plus5 = transform((x: Int) => x + 5, _: Int)
+  val into3 = transform((x: Int) => x * 3, _: Int)
+  plus5(6)
+  into3(6)
 
   // pure-function
 
   def stat(num: List[Int]) = {
     (num.sum, num.sum / num.length.toDouble)
-  } //> stat: (num: List[Int])(Int, Double)
+  }
 
-  val list1 = List(1, 2, 3, 4, 5) //> list1  : List[Int] = List(1, 2, 3, 4, 5)
-  val list2 = List(6, 7, 8, 9, 10) //> list2  : List[Int] = List(6, 7, 8, 9, 10)
+  val list1 = List(1, 2, 3, 4, 5)
+  val list2 = List(6, 7, 8, 9, 10)
 
-  (stat(list1), stat(list2)) //> res0: ((Int, Double), (Int, Double)) = ((15,3.0),(40,8.0))
+  (stat(list1), stat(list2))
 
   // recursion
   def factorial(n: Int): Int = {
     if (n == 0) 1
     else n * factorial(n - 1)
-  } //> factorial: (n: Int)Int
+  }
 
-  factorial(5) //> res0: Int = 120
+  factorial(5)
 
   // lazy val
-  lazy val a = b + 1 //> a: => Int
-  lazy val b = 1 //> b: => Int
-  a //> res0: Int = 2
-  b //> res1: Int = 1
+  lazy val a = b + 1
+  lazy val b = 1
+  a
+  b
 
   // call by name
   def withinTx(block: () => Unit) = {
     println("Begin TX"); block();
     println("End TX")
-  } //> withinTx: (block: () => Unit)Unit
+  }
+
   withinTx { () => println("Performing operation") }
-  //> Begin TX
-  //| Performing operation
-  //| End TX
+
   def insideTx(block: => Unit) = { println("Begin TX"); block; println("End TX") }
-  //> insideTx: (block: => Unit)Unit
-  insideTx { println("Performing operation") } //> Begin TX
-  //| Performing operation
-  //| End TX
+  insideTx { println("Performing operation") }
 
   // map-shuffle-reduce
-  val result = (1 to 20).map(x => x * x)
+  val result = (1 to 20)
+    .map(x => x * x)
     .groupBy(_ % 5).par
     .map { y => y._2.sum }
-    .sum //> result  : Int = 2870
+    .sum
+
+  // map, filter, fold, reduce
+
+  lst.map(x => x * x)
+  lst.filter(x => x % 3 == 0)
+  lst.reduce((x, y) => x + y)
+  lst.fold(0)((x, y) => x + y)
+  lst.reduce((x, y) => x * y)
+  lst.fold(1)((x, y) => x * y)
+  lst.reduceLeft((x, y) => x * y)
+  lst.foldLeft(1)((x, y) => x * y)
+  lst.reduceRight((x, y) => x * y)
+  lst.foldRight(1)((x, y) => x * y)
+
+  // companion objects
+  class Animal(name: String, lifespan: Int) {
+    def makeNoise(volume: Int): String = { name + " at volume: " + volume }
+  }
+
+  object Animal {
+    def apply(name: String, lifespan: Int) = new Animal(name, lifespan)
+  }
+
+  val a0 = new Animal("Mammoth", 100)
+  val a1 = Animal("Elephant", 40)
+
+  def veryLoud(animal: { def makeNoise(vol: Int): String }) = {
+    animal.makeNoise(10)
+  }
+
+  veryLoud(a0)
 }

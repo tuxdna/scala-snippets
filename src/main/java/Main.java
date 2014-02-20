@@ -3,7 +3,7 @@ import java.util.Vector;
 
 public class Main {
 	public static void main(String args[]) {
-		Vector<Integer> vec = new Vector<>();
+		Vector<Integer> vec = new Vector<Integer>();
 		System.out.println("Befor sorting");
 		for (int index = 0; index < 10; index++) {
 			int rand = (int) (1000 * Math.random());

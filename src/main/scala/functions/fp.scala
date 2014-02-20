@@ -77,7 +77,20 @@ object fp {
     statfun(numbers)
   }
 
-  def main(args: Array[String]) = {
+  def recursive_poisson_helper(m: Long, r: Long, p: Double, i: Long): Double = {
+    if (r == i) {
+      p
+    } else {
+      recursive_poisson_helper(m, r, (p * m) / (i + 1), i + 1)
+    }
+  }
+
+  def efficient_poisson(m: Long, r: Long): Double = {
+    val p = math.exp(-m)
+    recursive_poisson_helper(m, r, p, 0)
+  }
+
+  def main(args: Array[String]) {
     val nums = List(5.0, 6.4, 1.0, 5.2, 5.5, 1.0, 5.5, 3.2, 1.0, 1.0, 3.2)
     println("numbers: " + nums)
     println("sum: " + sum(nums))
@@ -87,8 +100,10 @@ object fp {
     println("standard deviation: " + standardDeviation(nums))
 
     val s1 = statistic(mean) _
-    
+
     val s1result = s1(List(1, 2, 3, 5, 8))
     println("s1result: " + s1result)
+
+    (1 to 5) map (efficient_poisson(5, _)) sum
   }
 }
