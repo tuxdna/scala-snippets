@@ -1,6 +1,7 @@
 package ch12
 
 object ex03 extends App {
+
   def fact(n: Int): Int = {
     if (n < 0) -fact(-n)
     else if (n == 0) 1

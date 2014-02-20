@@ -1,6 +1,7 @@
 package ch11
 
 object ex06 extends App {
+
   class ASCIIArt(val figure: List[String]) {
     override def toString = {
       figure.mkString("\n");

@@ -1,6 +1,7 @@
 package ch16
 
 object ex06 extends App {
+
   val xml = <html>
               <head>
                 <title> My list of jokes </title>
@@ -36,4 +37,5 @@ object ex06 extends App {
             </html>
 
   val f = (xml \\ "a") map { x => (x.text.trim(), x.attribute("href").get) } foreach (a => println(s"${a._1} => ${a._2}"))
+
 }

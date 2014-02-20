@@ -1,6 +1,7 @@
 package ch13
 
 object ex01 extends App {
+
   def mapchar(s: String) = {
     s.zipWithIndex.foldLeft(Map[Char, Set[Int]]()) { (m, y) =>
       val (c, i) = y

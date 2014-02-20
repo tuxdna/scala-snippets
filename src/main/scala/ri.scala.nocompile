@@ -1,0 +1,164 @@
+import breeze.linalg._
+import util.Random
+
+object RandomIndexing {
+  val random = new Random()
+  val log1_ufunc = breeze.generic.UFunc{ x: Double => math.log(1.0 + x) }
+  var globalTFVector: DenseVector[Double] = Any
+
+  def allocateElementalVector(n: Int, k: Int) = {
+    val v = DenseVector.zeros[Double](n)
+    for(i <- 0 until k) {
+      v( random.nextInt(n) ) = +1
+      v( random.nextInt(n) ) = -1
+    }
+    // transpose column vector to make a row vector
+    v.t
+  }
+
+  // p = number of elements to generate vectors for
+  def allocateElementalVectors(p: Int, n: Int, k: Int) = {
+    val D = DenseMatrix.zeros[Double](p, n)
+    for( i <- 0 until p ) {
+       D(i,::) := allocateElementalVector(n, k)
+    }
+    D
+  }
+
+  // T = set of terms
+  // q = number of terms
+  // M = term-doc matrix
+  // p = no of docs
+  // D = basis term matrix / vector set
+  def trainModel(M: DenseMatrix[Double], D: DenseMatrix[Double]) = {
+    val (numDocs, dimension) = (D.rows, D.cols)
+    val numTerms = M.rows
+    val T = DenseMatrix.zeros[Double](numTerms, dimension)
+    for(i <- 0 until numTerms; j <- 0 until numDocs) {
+        // inplace addition of vector
+        val termMeasure = M(i, j)
+    	T(i, ::) :+= weight( D(j, ::) :* termMeasure )
+    }
+    // optional step
+    for(i <- 0 until numTerms) normalize( T(i, ::) )
+    T
+  }
+
+  def trainSlidingWindowModel(D: DenseMatrix[Double], T0: DenseMatrix[Double], w: Int) = {
+    val numDocs = D.rows
+    val T1 = DenseMatrix.zeros[Double](numDocs, dimension)
+    for( i <- 0 until numDocs ) {
+      val d = D(i)
+      // generate all pairs in d
+      for(  (a,b) <- allPairs(d) ) {
+	if( distance(a,b) < w ) {
+	  T1(a, ::) :+= weight( a, b )  :* T0(b, ::)
+	}
+      }
+    }
+    // optional step
+    for(i <- 0 until numTerms) normalize( T1(i, ::) )
+    T1
+  }
+
+  // v is a single row matrix ( representing a vector )
+  // M is a term-doc matrix ( representing inverted index )
+  def weight(v: DenseMatrix[Double], M: DenseMatrix[Double]) = {
+    // Local weighting
+    log1_ufunc.inPlace(v)
+    // Implement log entropy weighting
+    def entropyFunc = {
+      var entropy = 0.0
+      for(i <- 0 until v.cols) {
+	val tf_ij = v(i)
+	val gf_ij = globalTFVector(i)
+	val pij = tf_ij / gf_ij
+	val entropyComponent = pij * log(pij) / log(numDocs)
+	entropy = entropy + entropyComponent
+      }
+    }
+    val log1_ufunc_entropy = breeze.generic.UFunc{ x: Double => math.log(1.0 + entropyFunc(x) ) }
+    v
+  }
+
+  def normalize(v: DenseMatrix[Double]) = {
+    // TODO: Implement normalization
+    v
+  }
+
+  def main(args: Array[String]) = {
+    // create inverted index
+    val numDocs = 4
+    val numTerms = 5
+    val dimension = 5
+    val seed = 2
+    val II = DenseMatrix.zeros[Double](numTerms, numDocs)
+    /// DenseVector is column vector, transpose it first.
+    II(0, ::) := DenseVector[Double](1,0,0,0).t
+    II(1, ::) := DenseVector[Double](1,0,0,0).t
+    II(2, ::) := DenseVector[Double](1,0,0,1).t
+    II(3, ::) := DenseVector[Double](1,1,1,0).t
+    II(4, ::) := DenseVector[Double](0,1,0,0).t
+    val globalTFVector = sum(II, Axis._1).toDenseVector
+    println("Inverted Index: ")
+    println(II)
+
+    println("Global Term-Frequency Vector: ")
+    println(globalTFVector)
+
+
+    // Basic Random Indexing
+    def RI = {
+      // create basis vector set / matrix
+      val D0 = allocateElementalVectors(numDocs, dimension, seed)
+      println("Basis Vectors: ")
+      println(D)
+
+      val T1 = trainModel(II, D)
+      println("Term Vectors: ")
+      println(T)
+    }
+
+    // Document-based Reflective Random Indexing
+    def DRRI = {
+      // create basis vector set / matrix
+      val D0 = allocateElementalVectors(numDocs, dimension, seed)
+      println("Basis Vectors: ")
+      println(D0)
+
+      val T1 = trainModel(II, D0)
+      val D2 = trainModel(II, T1)
+      val T3 = trainModel(II, D2)
+
+      println("Term Vectors: ")
+      println(T3)
+    }
+
+    // Term-term Random Indexing
+    def TTRI = {
+      // create basis vector set / matrix
+      val T0 = allocateElementalVectors(numTerms, dimension, seed)
+      println("Basis Vectors: ")
+      println(T0)
+
+      val T1 = trainSlidingWindowModel(II, T0)
+
+      println("Term Vectors: ")
+      println(T1)
+    }
+
+    // Term based Reflective Random Indexing
+    def TRRI = {
+      // create basis vector set / matrix
+      val T0 = allocateElementalVectors(numTerms, dimension, seed)
+      println("Basis Vectors: ")
+      println(T0)
+
+      val D1 = trainModel(II, T0)
+      val T2 = trainModel(II, D1)
+      println("Term Vectors: ")
+      println(T2)
+    }
+
+  }
+}
