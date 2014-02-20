@@ -4,10 +4,7 @@ object engine {
 
   object FuelLevel extends Enumeration {
     type FuelLevel = Value
-    val Empty = Value("EMPTY")
-    val Reserve = Value("RESERVE")
-    val Half = Value("HALF")
-    val Full = Value("FULL")
+    val Empty, Reserve, Half, Full = Value
   }
 
   import FuelLevel._
@@ -67,8 +64,9 @@ object engine {
     def this(hp: Int, state: Boolean, fl: FuelLevel) = this(hp, state, fl, "Toy")
     def make = "SteamEngine - " + model
   }
-  
+
   def main(args: Array[String]) {
+
     val e1 = new FourStrokeEngine(40, false, FuelLevel.Empty)
     println(e1)
     e1.start // won't start

@@ -172,4 +172,10 @@ object quicklook {
   insideTx { println("Performing operation") } //> Begin TX
   //| Performing operation
   //| End TX
+
+  // map-shuffle-reduce
+  val result = (1 to 20).map(x => x * x)
+    .groupBy(_ % 5).par
+    .map { y => y._2.sum }
+    .sum //> result  : Int = 2870
 }
