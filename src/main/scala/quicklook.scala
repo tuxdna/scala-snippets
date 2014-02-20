@@ -178,4 +178,28 @@ object quicklook {
     .groupBy(_ % 5).par
     .map { y => y._2.sum }
     .sum //> result  : Int = 2870
+
+  trait Perishable {
+    def name: String
+    def lifespan: Int
+  }
+
+  object Singleton {
+    // object body
+    def method1(p1: Int, p2: String): String = { "" }
+  }
+
+  class Person {
+    // class body
+    def method1(p1: Int, p2: String): String = { "" }
+  }
+
+  class Animal(name: String, lifespan: Int) {
+    // class body
+    def method1(p1: Int, p2: String): String = { "" }
+  }
+
+  object Animal {
+    def apply(name: String, lifespan: Int) = new Animal(name, lifespan)
+  }
 }
