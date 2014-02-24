@@ -1,7 +1,9 @@
+
 import java.util.Collections;
 import java.util.Vector;
 
 public class Main {
+
 	public static void main(String args[]) {
 		Vector<Integer> vec = new Vector<Integer>();
 		System.out.println("Befor sorting");
@@ -17,5 +19,7 @@ public class Main {
 		for (Integer intnum : vec) {
 			System.out.println(intnum);
 		}
+
+		
 	}
 }
