@@ -188,6 +188,22 @@ object quicklook {
   lst.reduceRight((x, y) => x * y)
   lst.foldRight(1)((x, y) => x * y)
 
+  // OOP in Scala
+  trait Perishable {
+    def name: String
+    def lifespan: Int
+  }
+
+  object Singleton {
+    // object body
+    def method1(p1: Int, p2: String): String = { "" }
+  }
+
+  class Person {
+    // class body
+    def method1(p1: Int, p2: String): String = { "" }
+  }
+  
   // companion objects
   class Animal(name: String, lifespan: Int) {
     def makeNoise(volume: Int): String = { name + " at volume: " + volume }
