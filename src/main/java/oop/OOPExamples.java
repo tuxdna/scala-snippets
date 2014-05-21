@@ -14,6 +14,7 @@ public class OOPExamples {
 
 		};
 
+		@SuppressWarnings("unchecked")
 		List<Person> list = Arrays.asList(persons);
 		System.out.println(list);
 		Collections.sort(list, new Comparator<Person>() {
