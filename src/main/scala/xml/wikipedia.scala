@@ -11,7 +11,17 @@ object wikipedia extends App {
 
   val xmlFile = args(0)
   val outputLocation = new File(args(1))
+  
+  if(!outputLocation.exists()) {
+    println("Creating output directory: "+outputLocation.getAbsolutePath())
+    outputLocation.mkdirs()
+  }
 
+  if(!outputLocation.isDirectory()) {
+    val msg = "Output must be a directory: "+outputLocation.getAbsolutePath()
+    throw new Exception(msg)
+  }
+  
   val xml = new XMLEventReader(Source.fromFile(xmlFile))
 
   var insidePage = false
