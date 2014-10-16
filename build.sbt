@@ -26,3 +26,11 @@ libraryDependencies += "de.tudarmstadt.ukp.wikipedia" % "de.tudarmstadt.ukp.wiki
 
 libraryDependencies += "org.mongodb" %% "casbah" % "2.6.3"
 
+libraryDependencies += "org.asciidoctor" % "asciidoctor-java-integration" % "0.1.4"
+
+libraryDependencies += "org.apache.activemq" % "activemq-all" % "5.10.0"
+
+resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
+
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.2.2"
+
