@@ -1,7 +1,8 @@
-package myactors
+package learnakka.examples
 
 import akka.actor.Actor
 import akka.actor.Props
+import akka.actor.actorRef2Scala
 
 class HelloWorld extends Actor {
   override def preStart(): Unit = {
@@ -30,5 +31,5 @@ class Greeter extends Actor {
 }
 
 object runner extends App {
-  akka.Main.main(Array[String]("myactors.HelloWorld"))
+  akka.Main.main(Array[String](classOf[HelloWorld].getName()))
 }

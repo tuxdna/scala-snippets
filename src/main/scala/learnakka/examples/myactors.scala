@@ -1,6 +1,9 @@
+package learnakka.examples
+
 import akka.actor.Actor
 import akka.actor.ActorSystem
 import akka.actor.Props
+import akka.actor.actorRef2Scala
 
 object myactors extends App {
   class HiActor extends Actor {
@@ -12,7 +15,7 @@ object myactors extends App {
 
   val system = ActorSystem("myActorSystem")
 
-  val actor1 = system.actorOf(Props[HiActor], name = "hiActor")
+  val actor1 = system.actorOf(Props[HiActor], name = "hiActor1")
 
   println("Started the actor actor1")
 
@@ -20,7 +23,9 @@ object myactors extends App {
   actor1 ! "Bye"
 
   case class Deposit(val amount: Double)
+  
   case class Withdraw(val amount: Double)
+  
   class AccountActor extends Actor {
     private var balance = 0.0
     def receive = {
@@ -31,7 +36,7 @@ object myactors extends App {
     }
   }
 
-  val actor2 = system.actorOf(Props[AccountActor], name = "hiActor")
+  val actor2 = system.actorOf(Props[AccountActor], name = "hiActor2")
 
   println("Started the actor actor2")
   actor2 ! Deposit(100)
