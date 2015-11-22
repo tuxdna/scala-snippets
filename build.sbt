@@ -2,11 +2,10 @@ name := "scala-snippets"
 
 version := "0.1"
 
-scalaVersion := "2.10.2"
 
 // libraryDependencies += "org.scala-tools.testing" % "specs_2.8.0" % "1.6.5" % "test"
 
-libraryDependencies += "org.scala-lang" % "scala-library" % "2.10.2"
+libraryDependencies += "org.scala-lang" % "scala-library" % "2.10.4"
 
 libraryDependencies += "org.apache.lucene" % "lucene-core" % "3.0.1"
 
@@ -16,7 +15,7 @@ libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.2.3"
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-async" % "0.9.0-M2"
 
-libraryDependencies += "org.scala-lang" % "scala-actors" % "2.10.2"
+libraryDependencies += "org.scala-lang" % "scala-actors" % "2.10.4"
 
 // libraryDependencies += "org.apache.mahout" % "mahout-examples" % "0.8"
 
@@ -34,3 +33,6 @@ resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.2.2"
 
+libraryDependencies += "org.twitter4j" % "twitter4j-stream" % "3.0.3"
+
+scalaVersion := "2.10.4"
