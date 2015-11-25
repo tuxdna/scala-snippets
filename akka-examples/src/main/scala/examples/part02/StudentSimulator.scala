@@ -1,17 +1,16 @@
 package examples.part02
 
 import akka.actor.{ActorLogging, ActorSystem, Actor, Props}
+import examples.{QuoteResponse, QuoteRequest}
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
+
 object StudentLoggingSimulator {
 
-  object QuoteRequest
 
-  case class QuoteResponse(response: String)
-
-  class TeacherActor extends Actor with ActorLogging {
+  class TeacherLoggingActor extends Actor with ActorLogging {
     val quotes = List(
       "Moderation is for cowards",
       "Anything worth doing is worth overdoing",
@@ -32,7 +31,7 @@ object StudentLoggingSimulator {
   def main(args: Array[String]) {
 
     val actorSystem = ActorSystem("MySystem")
-    val teacherActorRef = actorSystem.actorOf(Props[TeacherActor])
+    val teacherActorRef = actorSystem.actorOf(Props[TeacherLoggingActor])
     teacherActorRef ! QuoteRequest
     Thread.sleep(2000)
     val terminateFuture = actorSystem.terminate()

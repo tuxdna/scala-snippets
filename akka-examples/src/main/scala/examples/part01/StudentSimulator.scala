@@ -3,13 +3,13 @@ package examples.part01
 import akka.actor.ActorSystem
 import akka.actor.Actor
 import akka.actor.Props
+import examples.QuoteRequest
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
-object StudentSimulator {
 
-  object QuoteRequest
+object StudentSimulator {
 
   class TeacherActor extends Actor {
     val quotes = List(
@@ -28,13 +28,11 @@ object StudentSimulator {
 
 
   def main(args: Array[String]) {
-
     val actorSystem = ActorSystem("MySystem")
     val teacherActorRef = actorSystem.actorOf(Props[TeacherActor])
     teacherActorRef ! QuoteRequest
     Thread.sleep(2000)
     val terminateFuture = actorSystem.terminate()
     Await.result(terminateFuture, 10 seconds)
-
   }
 }
