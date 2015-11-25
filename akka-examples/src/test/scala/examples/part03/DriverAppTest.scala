@@ -11,6 +11,10 @@ class DriverAppTest extends TestKit(ActorSystem("MySystem",
   ConfigFactory.parseString(
     """
       |akka{
+      | test {
+      |  filter-leeway = 7s
+      | }
+      |
       | loggers = [
       |     "akka.testkit.TestEventListener",
       |     "akka.event.slf4j.Slf4jLogger"
@@ -22,7 +26,7 @@ class DriverAppTest extends TestKit(ActorSystem("MySystem",
 with WordSpecLike with MustMatchers with BeforeAndAfterAll {
 
   "A student" must {
-    " log a QuoteRespose after it receives an InitSignal message" in {
+    "log a response after it receives an InitSignal message" in {
       val teacherRef = system.actorOf(Props[TeacherActor])
       val studentRef = system.actorOf(Props(new StudentActor(teacherRef)))
       EventFilter.info(pattern = """Printing from Student Actor.*""", occurrences = 1).intercept {

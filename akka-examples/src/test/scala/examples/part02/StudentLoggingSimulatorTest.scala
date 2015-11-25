@@ -49,7 +49,7 @@ with WordSpecLike with MustMatchers with BeforeAndAfterAll {
       }
     }
 
-    "has sate same as provided state" in {
+    "have sate same as provided state" in {
       val quotes = List(
         "Moderation is for cowards",
         "Anything worth doing is worth overdoing",

@@ -1,9 +1,10 @@
-package examples
+package examples.part05
 
-import akka.actor.{Kill, PoisonPill, ActorLogging, Actor}
+import akka.actor._
 import akka.event.LoggingReceive
 
 import scala.concurrent.Await
+import scala.concurrent.duration._
 import scala.util.Random
 
 
@@ -33,14 +34,20 @@ class BasicLifecycleLoggingActor extends Actor with ActorLogging {
   }
 }
 
-import akka.actor.{ActorSystem, Props}
-import scala.concurrent.duration._
+class MyCustomDeadLetterListener extends Actor {
+  def receive = {
+    case deadLetter: DeadLetter => println(s"FROM CUSTOM LISTENER $deadLetter")
+  }
+}
 
-object Driver {
+object LifecycleExampleDriver {
   def main(args: Array[String]) {
     val actorSystem = ActorSystem("LifecycleActorSystem")
     val logger = actorSystem.log
     val lifecycleActor = actorSystem.actorOf(Props[BasicLifecycleLoggingActor], "lifecycleActor")
+    val deadLetterRef = actorSystem.actorOf(Props[MyCustomDeadLetterListener])
+    actorSystem.eventStream.subscribe(deadLetterRef, classOf[DeadLetter])
+
     lifecycleActor ! "hello"
 
     //wait for a couple of seconds before shutdown
@@ -60,6 +67,8 @@ object Driver {
         logger.info("Sending message: Kill")
         lifecycleActor ! Kill
     }
+
+    lifecycleActor ! "hello"
 
     val termF = actorSystem.terminate()
     logger.info("Terminate invoked")
