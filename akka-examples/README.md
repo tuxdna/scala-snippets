@@ -41,3 +41,12 @@ References:
  * [What is Actor Model?](https://channel9.msdn.com/Shows/Going+Deep/Hewitt-Meijer-and-Szyperski-The-Actor-Model-everything-you-wanted-to-know-but-were-afraid-to-ask)
 
  * [Concurrency in Erlang vs Scala](https://rocketeer.be/articles/concurrency-in-erlang-scala/)
+
+ * [Akka tutorials](http://rerun.me/2014/09/11/introducing-actors-akka-notes-part-1/)
+
+ * [Managing Congested Actors](http://www.nurkiewicz.com/2013/07/managing-congested-actors-in-akka.html)
+
+ * [Do's and Dont's When Deploying Akka in Production](http://boldradius.com/blog-post/U-jexSsAACwA_8nr/dos-and-donts-when-deploying-akka-in-production)
+
+ * [An introduction to CRDTs](http://www.cakesolutions.net/teamblogs/how-to-build-a-distributed-counter)
+
