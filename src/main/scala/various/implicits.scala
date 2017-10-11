@@ -1,5 +1,5 @@
 /* Defines a new method 'sort' for array objects */
-object implicits extends Application {
+object implicits extends App {
   implicit def arrayWrapper[A : ClassManifest](x: Array[A]) =
     new {
       def sort(p: (A, A) => Boolean) = {

@@ -8,7 +8,12 @@ object synchronization1 extends App {
       if (amount > 0 && balance >= amount) { balance = balance - amount; balance }
       else throw new Error("Insufficient funds!")
 
-    def deposit(amount: Int) = if (amount > 0) balance = balance + amount; balance
+    def deposit(amount: Int) = {
+      if (amount > 0) {
+        balance = balance + amount
+      }
+      balance
+    }
 
     def current_balance = balance
   }

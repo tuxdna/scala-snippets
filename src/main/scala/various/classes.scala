@@ -34,8 +34,9 @@ object ex3 {
 
 }
 
-import scala.reflect.BeanProperty
+// Deprecated and removed
+// import scala.reflect.BeanProperty
 
-class Person1 {
-  @BeanProperty var name: String = _
-}
+// class Person1 {
+//   @BeanProperty var name: String = _
+// }

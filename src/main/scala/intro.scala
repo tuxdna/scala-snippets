@@ -1,7 +1,6 @@
 
 
 import java.util.zip.GZIPInputStream
-import scala.io.UTF8Codec
 import java.util.zip.ZipInputStream
 
 object intro extends App {
@@ -303,7 +302,6 @@ object intro extends App {
 
     def gis(s: String) = new ZipInputStream(new BufferedInputStream(new FileInputStream(s)))
   // ZipInputStream
-  // UTF8Codec
 }
 
 package klazz {

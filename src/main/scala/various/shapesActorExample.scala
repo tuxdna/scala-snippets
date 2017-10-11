@@ -35,7 +35,7 @@ class ShapeDrawingActor extends Actor {
   def receive = {
     case s: Shape => s.draw()
     case "exit" =>
-      println("Exiting..."); exit
+      println("Exiting...");
     case x: Any => println("Error: Unknown message!" + x)
   }
 }
